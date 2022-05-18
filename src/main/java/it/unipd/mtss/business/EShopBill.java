@@ -9,9 +9,15 @@ import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.User;
 import it.unipd.mtss.model.itemType;
-import it.unipd.mtss.business.EShopBill;
-import java.util.*;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import java.util.TreeMap;
+
+import it.unipd.mtss.business.EShopBill;
 
 public class EShopBill implements Bill{
 
