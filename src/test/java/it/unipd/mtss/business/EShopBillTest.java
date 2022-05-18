@@ -1,6 +1,7 @@
 package it.unipd.mtss.business;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -190,19 +191,22 @@ public class EShopBillTest {
         }};
 
         List<EShopBill> ordineDanilo = new ArrayList<EShopBill>();
-        ordineDanilo.add(new EShopBill(lista, new UserImpl(0, "Danilo", 21), new Date(), 110.50));
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2022, 11, 1, 18, 30, 59);
+        ordineDanilo.add(new EShopBill(lista, new UserImpl(0, "Danilo", 21), calendar.getTime(), 110.50));
         List<EShopBill> ordiniPEGI12 = new LinkedList<>();
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(1, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(2, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(3, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(4, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(5, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(6, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(7, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(8, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(9, "Danilo", 10), new Date(), 110.50));
-        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(10, "Danilo", 10), new Date(), 110.50));
+        ordiniPEGI12.add(ordineDanilo.get(0));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(1, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(2, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(3, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(4, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(5, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(6, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(7, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(8, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(9, "Danilo", 10), calendar.getTime(), 110.50));
+        ordiniPEGI12.add(new EShopBill(lista, new UserImpl(10, "Danilo", 10), calendar.getTime(), 110.50));
         EShopBill.makeFreeOrder(ordiniPEGI12);
-        assertEquals(ordineDanilo, ordiniPEGI12);
+        assertEquals(ordineDanilo.get(0), ordiniPEGI12.get(0));
     }
 }
