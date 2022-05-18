@@ -2,7 +2,4 @@
 // XIDA CHEN 1217780
 // DANILO STOJKOVIC 1222399
 ////////////////////////////////////////////////////////////////////
-package it.unipd.mtss.business;
-public class EItem {
-    
-}
+

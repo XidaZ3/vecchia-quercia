@@ -2,7 +2,11 @@
 // XIDA CHEN 1217780
 // DANILO STOJKOVIC 1222399
 ////////////////////////////////////////////////////////////////////
-package it.unipd.mtss.business;
-public class User {
-    
+
+package it.unipd.mtss.model;
+
+public interface MenuItem {
+    itemType getType();
+    String getName();
+    double getPrice();
 }

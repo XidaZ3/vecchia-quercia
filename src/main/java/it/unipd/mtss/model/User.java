@@ -2,7 +2,10 @@
 // XIDA CHEN 1217780
 // DANILO STOJKOVIC 1222399
 ////////////////////////////////////////////////////////////////////
+
 package it.unipd.mtss.model;
-public class Item {
-    
+
+public interface User {
+    long getId();
+    String getName();
 }
