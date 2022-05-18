@@ -28,7 +28,6 @@ public class EShopBill implements Bill{
         this.user = user;
         this.date = date;
     }
-
     
     public double getRawTotal(List<EItem> itemsOrdered){     //requisito 1
         double total = 0.0;
@@ -89,7 +88,7 @@ public class EShopBill implements Bill{
                 }
             }                            
         }
-        if(counterMouse == counterKeyboard){                               
+        if(counterMouse == counterKeyboard && counterMouse != 0){                               
             total -= Math.min(cheapestMouse, cheapestKeyboard);
         }
         return total;
@@ -120,7 +119,7 @@ public class EShopBill implements Bill{
     public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException{
 
         double total = getRawTotal(itemsOrdered);                                    //R1
-        total = checkMoreThanFiveProcessorsDiscount(itemsOrdered, total);              //R2
+        total = checkMoreThanFiveProcessorsDiscount(itemsOrdered, total);            //R2
         total = checkMoreThanTenMousesDiscount(itemsOrdered, total);                 //R3
         total = checkSameAmountOfMousesAndKeyboardsDiscount(itemsOrdered, total);    //R4
         total = checkMoreThanAThousandSpentDiscount(total);                          //R5

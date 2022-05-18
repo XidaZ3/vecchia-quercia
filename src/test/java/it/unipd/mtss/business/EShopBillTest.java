@@ -17,24 +17,11 @@ import it.unipd.mtss.model.itemType;
 
 
 public class EShopBillTest {
-    @Test
-    public void getOrderPriceFromListOfItems(){
-        List<EItem> lista = new ArrayList<EItem>(){{
-            add(new EItem(itemType.Processor, "i7", 10.50));
-            add(new EItem(itemType.Processor, "i5", 5.50));
-            add(new EItem(itemType.Motherboard, "nuova", 50.00));
-            add(new EItem(itemType.Keyboard, "con le lucine", 100.50));
-        }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 166.5, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
+    
+    UserImpl xida = new UserImpl(0, "xida", 21);
 
     @Test
-    public void getOrderPriceWithDiscountWhenFiveProcessorsBought(){
+    public void checkMoreThanFiveProcessorsDiscountTest(){
         List<EItem> lista = new ArrayList<EItem>(){{
             add(new EItem(itemType.Processor, "i7", 10.50));
             add(new EItem(itemType.Processor, "i5", 7.50));
@@ -45,16 +32,14 @@ public class EShopBillTest {
             add(new EItem(itemType.Motherboard, "nuova", 50.00));
             add(new EItem(itemType.Keyboard, "con le lucine", 100.50));
         }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 193.25, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        assertEquals(
+            193.25, 
+            new EShopBill(lista, new UserImpl(0, "xida",21), new Date())
+                .checkMoreThanFiveProcessorsDiscount(lista, 194.50), 0.01);
     }
 
     @Test
-    public void getOrderPriceWithDiscontWhenSameAmountKeybordsAndMouses(){
+    public void checkSameAmountOfMousesAndKeyboardsDiscountTest(){
         //interpretazione di meno caro: tra mouse e tastiere
 
         List<EItem> lista = new ArrayList<EItem>(){{
@@ -68,18 +53,15 @@ public class EShopBillTest {
             add(new EItem(itemType.Keyboard, "senza le lucine", 10.50));
             add(new EItem(itemType.Keyboard, "meccanica", 60.00));
         }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21) ), 282.5, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        assertEquals(
+            282.50, 
+            new EShopBill(lista, new UserImpl(0, "xida",21), new Date())
+                .checkSameAmountOfMousesAndKeyboardsDiscount(lista, 293.00), 0.01);
     }
 
     @Test
-    public void getOrderPriceErrorWithMoreThan30Orders(){
-        //interpretazione di meno caro: tra mouse e tastiere
-
+    public void checkIfMoreThanThirtyItemsOrderedTest(){
+        
         List<EItem> lista = new ArrayList<EItem>(){{
             add(new EItem(itemType.Mouse, "piccolo", 10.50));
             add(new EItem(itemType.Mouse, "piccolo", 10.50));
@@ -114,64 +96,13 @@ public class EShopBillTest {
             add(new EItem(itemType.Mouse, "piccolo", 10.50));
         }};
         try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 287.75, 0.1);
+            assertEquals(
+                325.50, 
+                new EShopBill(lista, new UserImpl(0, "xida",21), new Date())
+                    .checkIfMoreThanThirtyItemsOrdered(lista, 325.50), 0.01);
         }
         catch(BillException e){
             assertEquals(e.id, 0);
-        }
-    }
-
-    @Test
-    public void getOrderPriceWithAdditionalCostsSinceTotalIsLessThan10(){
-        
-        List<EItem> lista = new ArrayList<EItem>(){{
-            add(new EItem(itemType.Mouse, "conveniente", 3.50));
-            add(new EItem(itemType.Mouse, "conveniente", 3.50));
-        }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 9.00, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getOrderPriceWithDiscontWhenTotalIsBiggerThan1000(){
-        List<EItem> lista = new ArrayList<EItem>(){{
-            add(new EItem(itemType.Mouse, "di diamanti", 300.50));
-            add(new EItem(itemType.Keyboard, "di diamanti", 500.50));
-            add(new EItem(itemType.Keyboard, "di diamanti", 500.50));
-            add(new EItem(itemType.Motherboard, "indistruttibile", 300.00));
-            add(new EItem(itemType.Processor, "alieno", 700.00));
-        }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 2071.35, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void getOrderPriceWithFreeMouseWhenAtLeast10AreBought(){
-        List<EItem> lista = new ArrayList<EItem>(){{
-            add(new EItem(itemType.Mouse, "rotto", 0.50));
-            add(new EItem(itemType.Mouse, "rotto", 0.50));
-            add(new EItem(itemType.Mouse, "rotto", 0.50));
-            add(new EItem(itemType.Mouse, "economico", 1.50));
-            add(new EItem(itemType.Mouse, "base", 5.50));
-            add(new EItem(itemType.Mouse, "okay", 10.50));
-            add(new EItem(itemType.Mouse, "buono", 15.50));
-            add(new EItem(itemType.Mouse, "buonetto", 20.50));
-            add(new EItem(itemType.Mouse, "molto buono", 25.50));
-            add(new EItem(itemType.Mouse, "buonissimo", 30.50));
-        }};
-        try{
-            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getOrderPrice(lista, new UserImpl(0, "xida",21)), 110.50, 0.1);
-        }
-        catch(Exception e){
-            e.printStackTrace();
         }
     }
 
@@ -209,5 +140,56 @@ public class EShopBillTest {
         ordiniPEGI12.add(new EShopBill(lista, new UserImpl(10, "Danilo", 10), calendar.getTime()));
         EShopBill.makeFreeOrder(ordiniPEGI12);
         assertEquals(ordineDanilo.get(0), ordiniPEGI12.get(0));
+    }
+
+    @Test
+    public void getOrderPriceWithNoDiscount(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Mouse, "piccolo", 10.50));
+            add(new EItem(itemType.Mouse, "medio", 20.50));
+            add(new EItem(itemType.Mouse, "gigante", 100.50));
+            add(new EItem(itemType.Processor, "m2", 0.50));
+            add(new EItem(itemType.Keyboard, "meccanica", 20.00));
+            add(new EItem(itemType.Motherboard, "non so nomi di schede madri", 50.50));
+            add(new EItem(itemType.Motherboard, "basta non ne metto altre", 20.00));
+            add(new EItem(itemType.Mouse, "un altro mouse", 30.00));
+            add(new EItem(itemType.Keyboard, "solo numeri", 8.00));
+            add(new EItem(itemType.Processor, "piccolo folletto che fa i calcoli", 111.11));
+        }};
+        try{
+            assertEquals(371.61, new EShopBill(lista, xida, new Date()).getOrderPrice(lista, xida), 0.01);
+        }
+        catch(BillException e){
+            assertEquals(false, true);
+        }
+    }
+
+    @Test
+    public void getOrderPriceWithProcessorAndMouseDiscount(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Mouse, "piccolo", 10.50));
+            add(new EItem(itemType.Mouse, "medio", 20.50));
+            add(new EItem(itemType.Mouse, "gigante", 100.50));
+            add(new EItem(itemType.Mouse, "piccolo", 10.50));
+            add(new EItem(itemType.Mouse, "medio", 20.50));
+            add(new EItem(itemType.Mouse, "gigante", 100.50));
+            add(new EItem(itemType.Mouse, "piccolo", 10.50));
+            add(new EItem(itemType.Mouse, "medio", 20.50));
+            add(new EItem(itemType.Mouse, "gigante", 100.50));
+            add(new EItem(itemType.Mouse, "gigantissimo", 200.00));
+            add(new EItem(itemType.Processor, "m2", 0.50));
+            add(new EItem(itemType.Keyboard, "meccanica", 20.00));
+            add(new EItem(itemType.Processor, "piccolo folletto che fa i calcoli", 111.11));
+            add(new EItem(itemType.Processor, "m1", 0.25));
+            add(new EItem(itemType.Processor, "i1", 10.00));
+            add(new EItem(itemType.Processor, "non so più", 5.00));
+            add(new EItem(itemType.Processor, "processore anonimo", 3.00));
+        }};
+        try{
+            assertEquals(733.735, new EShopBill(lista, xida, new Date()).getOrderPrice(lista, xida), 0.01);
+        }
+        catch(BillException e){
+            assertEquals(false, true);
+        }
     }
 }
