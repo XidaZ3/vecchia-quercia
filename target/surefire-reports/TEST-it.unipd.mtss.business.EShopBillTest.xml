@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="it.unipd.mtss.business.EShopBillTest" time="0.18" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="it.unipd.mtss.business.EShopBillTest" time="0.212" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="IT"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17.0.3\bin"/>
-    <property name="sun.java.command" value="C:\Users\danil\AppData\Local\Temp\surefire17271064994008246439\surefirebooter14968373090159780344.jar C:\Users\danil\AppData\Local\Temp\surefire17271064994008246439 2022-05-18T11-47-50_965-jvmRun1 surefire12567920179333982114tmp surefire_04208301548968197444tmp"/>
+    <property name="sun.java.command" value="C:\Users\danil\AppData\Local\Temp\surefire1276156868899073662\surefirebooter16017521391682422917.jar C:\Users\danil\AppData\Local\Temp\surefire1276156868899073662 2022-05-18T22-39-24_698-jvmRun1 surefire5516838847967517511tmp surefire_016161030744827561444tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\danil\Desktop\e-shop-manager\target\test-classes;C:\Users\danil\Desktop\e-shop-manager\target\classes;C:\Users\danil\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\danil\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\danil\AppData\Local\Temp\surefire17271064994008246439\surefirebooter14968373090159780344.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\danil\AppData\Local\Temp\surefire1276156868899073662\surefirebooter16017521391682422917.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.3+8-LTS-111"/>
@@ -56,11 +56,12 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="getOrderPriceErrorWithMoreThan30Orders" classname="it.unipd.mtss.business.EShopBillTest" time="0.021"/>
+  <testcase name="getOrderPriceErrorWithMoreThan30Orders" classname="it.unipd.mtss.business.EShopBillTest" time="0.036"/>
   <testcase name="getOrderPriceWithDiscountWhenFiveProcessorsBought" classname="it.unipd.mtss.business.EShopBillTest" time="0.001"/>
   <testcase name="getOrderPriceFromListOfItems" classname="it.unipd.mtss.business.EShopBillTest" time="0.003"/>
   <testcase name="getOrderPriceWithDiscontWhenTotalIsBiggerThan1000" classname="it.unipd.mtss.business.EShopBillTest" time="0.003"/>
+  <testcase name="makeGiftsWhenBoughtBetween18and19hour" classname="it.unipd.mtss.business.EShopBillTest" time="0.006"/>
   <testcase name="getOrderPriceWithDiscontWhenSameAmountKeybordsAndMouses" classname="it.unipd.mtss.business.EShopBillTest" time="0.003"/>
-  <testcase name="getOrderPriceWithFreeMouseWhenAtLeast10AreBought" classname="it.unipd.mtss.business.EShopBillTest" time="0.003"/>
+  <testcase name="getOrderPriceWithFreeMouseWhenAtLeast10AreBought" classname="it.unipd.mtss.business.EShopBillTest" time="0.004"/>
   <testcase name="getOrderPriceWithAdditionalCostsSinceTotalIsLessThan10" classname="it.unipd.mtss.business.EShopBillTest" time="0.002"/>
 </testsuite>

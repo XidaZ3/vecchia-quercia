@@ -3,10 +3,21 @@
 // DANILO STOJKOVIC 1222399
 ////////////////////////////////////////////////////////////////////
 
-package it.unipd.mtss.model;
+package it.unipd.mtss;
 
-public interface User {
-    long getId();
-    String getName();
-    int getAge();
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+    public static void main( String[] args )
+    {
+
+
+
+        System.out.println( "Hello World!" );
+    }
+
+    
 }

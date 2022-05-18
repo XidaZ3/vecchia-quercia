@@ -9,83 +9,130 @@ import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.User;
 import it.unipd.mtss.model.itemType;
+import it.unipd.mtss.business.EShopBill;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.TreeMap;
-
-import it.unipd.mtss.business.EShopBill;
 
 public class EShopBill implements Bill{
 
     List<EItem> itemsOrdered;
     User user;
     Date date;
-    double price;
 
-    public EShopBill(List<EItem> itemsOrdered, User user, Date date, double price){
+    public EShopBill(List<EItem> itemsOrdered, User user, Date date){
         this.itemsOrdered = itemsOrdered;
         this.user = user;
         this.date = date;
-        this.price = price;
     }
+
+    
+    public double getRawTotal(List<EItem> itemsOrdered){     //requisito 1
+        double total = 0.0;
+        for(EItem item : itemsOrdered){
+            total += item.getPrice();                               
+        }
+        return total;
+    }
+
+    public double checkMoreThanFiveProcessorsDiscount(List<EItem> itemsOrdered, double total){      //requisito 2
+        int counter = 0;
+        double cheapest = Double.POSITIVE_INFINITY;
+        for(EItem item : itemsOrdered){
+            if(item.getType() == itemType.Processor){
+                counter++;
+                if(item.getPrice() < cheapest){
+                    cheapest = item.getPrice();
+                }
+            }                             
+        }
+        if(counter >= 5){                               
+            total -= cheapest / 2;
+        }
+        return total;
+    }
+
+    public double checkMoreThanTenMousesDiscount(List<EItem> itemsOrdered, double total){           //requisito 3
+        int counter = 0;
+        double cheapest = Double.POSITIVE_INFINITY;
+        for(EItem item : itemsOrdered){
+            if(item.getType() == itemType.Mouse){
+                counter++;
+                if(item.getPrice() < cheapest){
+                    cheapest = item.getPrice();
+                }
+            }                             
+        }
+        if(counter >= 10){                               
+            total -= cheapest;
+        }
+        return total;
+    }
+
+    public double checkSameAmountOfMousesAndKeyboardsDiscount(List<EItem> itemsOrdered, double total){  //requisito 4
+        int counterMouse = 0, counterKeyboard = 0;
+        double cheapestMouse = Double.POSITIVE_INFINITY, cheapestKeyboard = Double.POSITIVE_INFINITY;
+        for(EItem item : itemsOrdered){
+            if(item.getType() == itemType.Mouse){
+                counterMouse++;
+                if(item.getPrice() < cheapestMouse){
+                    cheapestMouse = item.getPrice();
+                }
+            }   
+            else if(item.getType() == itemType.Keyboard){
+                counterKeyboard++;
+                if(item.getPrice() < cheapestKeyboard){
+                    cheapestKeyboard = item.getPrice();
+                }
+            }                            
+        }
+        if(counterMouse == counterKeyboard){                               
+            total -= Math.min(cheapestMouse, cheapestKeyboard);
+        }
+        return total;
+    }
+
+    public double checkMoreThanAThousandSpentDiscount(double total){           //requisito 5
+        if(total > 1000){
+            return total * 0.9;
+        }
+        return total;
+    }
+
+    public double checkIfMoreThanThirtyItemsOrdered(List<EItem> itemsOrdered, double total) throws BillException{   //requisito 6
+        if(itemsOrdered.size() > 30){                                           
+            throw new BillException(0, "troppi ordini");
+        }
+        return total;
+    }
+
+    public double checkIfTotalIsLessThanTen(double total){           //requisito 7
+        if(total < 10){
+            return total + 2;
+        }
+        return total;
+    }
+
 
     public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException{
 
-        if(itemsOrdered.size() > 30){                                           //requisito 6
-            throw new BillException(0, "troppi ordini");
-        }
-
-        double total = 0.0;
-        TreeMap<itemType, Integer> counters = new TreeMap<itemType, Integer>();
-        counters.put(itemType.Processor, 0);
-        counters.put(itemType.Motherboard, 0);
-        counters.put(itemType.Mouse, 0);
-        counters.put(itemType.Keyboard, 0);
-
-        TreeMap<itemType, Double> cheapest = new TreeMap<itemType, Double>();
-        cheapest.put(itemType.Processor, Double.POSITIVE_INFINITY);
-        cheapest.put(itemType.Motherboard, Double.POSITIVE_INFINITY);
-        cheapest.put(itemType.Mouse, Double.POSITIVE_INFINITY);
-        cheapest.put(itemType.Keyboard, Double.POSITIVE_INFINITY);
-
-        itemType type = null;
-
-        for(EItem item : itemsOrdered){
-
-            type = item.getType();
-            counters.put(type, counters.get(type) + 1);
-            if(item.getPrice() < cheapest.get(type)){
-                cheapest.put(type, item.getPrice());
-            }
-
-            total += item.getPrice();                                                                         //requisito 1
-        }
-        if(counters.get(itemType.Processor) >= 5){                                                            //requisito 2
-            total -= cheapest.get(itemType.Processor) / 2;
-        }
-        if(counters.get(itemType.Mouse) >= 10){                                                               //requisito 3
-            total -= cheapest.get(itemType.Mouse);
-        }
-        if(counters.get(itemType.Mouse)==counters.get(itemType.Keyboard)){                                    //requisito 4
-            total -= Math.min(cheapest.get(itemType.Mouse), cheapest.get(itemType.Keyboard)) / 2;
-        }
-        if(total < 10){                           //requisito 7
-            total += 2;
-        }
-        if(total > 1000){
-            total -= total * 0.1;                  //requisito 5
-        }
+        double total = getRawTotal(itemsOrdered);                                    //R1
+        total = checkMoreThanFiveProcessorsDiscount(itemsOrdered, total);              //R2
+        total = checkMoreThanTenMousesDiscount(itemsOrdered, total);                 //R3
+        total = checkSameAmountOfMousesAndKeyboardsDiscount(itemsOrdered, total);    //R4
+        total = checkMoreThanAThousandSpentDiscount(total);                          //R5
+        total = checkIfMoreThanThirtyItemsOrdered(itemsOrdered, total);              //R6
+        total = checkIfTotalIsLessThanTen(total);                                    //R7
 
         return total;
     }
 
-    public static void makeFreeOrder(List<EShopBill> bills) {
+    public static void makeFreeOrder(List<EShopBill> bills) {              //requisito 8
 
-        List<EShopBill> validOrders = new ArrayList<>();
+        List<EShopBill> validOrders = new ArrayList<EShopBill>();
         Calendar calendar = Calendar.getInstance();
             for (EShopBill bill: bills) {
                 calendar.setTime(bill.date);
