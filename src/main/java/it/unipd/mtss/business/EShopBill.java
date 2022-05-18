@@ -5,16 +5,28 @@
 
 package it.unipd.mtss.business;
 
-import java.util.List;
-import java.util.TreeMap;
-
 import it.unipd.mtss.business.exception.BillException;
 import it.unipd.mtss.model.EItem;
 import it.unipd.mtss.model.User;
 import it.unipd.mtss.model.itemType;
 import it.unipd.mtss.business.EShopBill;
+import java.util.*;
+
 
 public class EShopBill implements Bill{
+
+    List<EItem> itemsOrdered;
+    User user;
+    Date date;
+    double price;
+
+    public EShopBill(List<EItem> itemsOrdered, User user, Date date, double price){
+        this.itemsOrdered = itemsOrdered;
+        this.user = user;
+        this.date = date;
+        this.price = price;
+    }
+
     public double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException{
 
         if(itemsOrdered.size() > 30){                                           //requisito 6
@@ -61,6 +73,36 @@ public class EShopBill implements Bill{
         if(total > 1000){
             total -= total * 0.1;                  //requisito 5
         }
+
         return total;
     }
+
+    public static void makeFreeOrder(List<EShopBill> bills) {
+
+        List<EShopBill> validOrders = new LinkedList<>();
+        Calendar calendar = Calendar.getInstance();
+            for (EShopBill bill: bills) {
+                calendar.setTime(bill.date);
+                if (bill.user.getAge() <= 18 
+                && calendar.get(Calendar.HOUR_OF_DAY) >= 18 
+                && calendar.get(Calendar.HOUR_OF_DAY) < 19) {
+                    validOrders.add(bill);
+                }
+            }
+        
+        List<User> alreadyGifted = new ArrayList<User>();
+        int freeOrders = 0;
+        while (freeOrders < 10 && !validOrders.isEmpty()) {
+            int rand = new Random().nextInt(validOrders.size());
+            User luckyPerson = validOrders.get(rand).user;
+            //validità (ordini di user diversi)
+            if (!alreadyGifted.contains(luckyPerson)) {
+                freeOrders++;
+                alreadyGifted.add(luckyPerson);
+            }
+            bills.remove(validOrders.get(rand));
+            validOrders.remove(rand);
+        }
+    }
 }
+

@@ -8,10 +8,12 @@ package it.unipd.mtss.model;
 public class UserImpl implements User{
     private long id;
     private String name;
+    private int age;
 
-    public UserImpl(long id, String name){
+    public UserImpl(long id, String name,int age){
         this.id = id;
         this.name = name;
+        this.age = age;
     }
 
     public long getId(){
@@ -20,5 +22,9 @@ public class UserImpl implements User{
 
     public String getName(){
         return name;
+    }
+
+    public int getAge(){
+        return age;
     }
 }
