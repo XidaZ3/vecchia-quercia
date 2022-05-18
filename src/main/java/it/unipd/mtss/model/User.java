@@ -6,7 +6,5 @@
 package it.unipd.mtss.model;
 
 public interface User {
-    long getId();
-    String getName();
     int getAge();
 }
