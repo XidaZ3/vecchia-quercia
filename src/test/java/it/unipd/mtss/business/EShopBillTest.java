@@ -108,6 +108,7 @@ public class EShopBillTest {
 
     @Test
     public void makeGiftsWhenBoughtBetween18and19hour()
+
     {
         List<EItem> lista = new ArrayList<EItem>(){{
             add(new EItem(itemType.Mouse, "rotto", 0.50));
@@ -190,6 +191,76 @@ public class EShopBillTest {
         }
         catch(BillException e){
             assertEquals(false, true);
+        }
+    }
+    
+    @Test  
+    public void getRawTotalTest(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Processor, "i7", 10.50));
+            add(new EItem(itemType.Processor, "i5", 5.50));
+            add(new EItem(itemType.Motherboard, "nuova", 50.00));
+            add(new EItem(itemType.Keyboard, "con le lucine", 100.50));
+        }};
+
+       try{
+            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).getRawTotal(lista), 166.5, 0.1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    @Test  
+    public void checkMoreThanTenMousesDiscountTest(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Mouse, "rotto", 0.50));
+            add(new EItem(itemType.Mouse, "rotto", 0.50));
+            add(new EItem(itemType.Mouse, "rotto", 0.50));
+            add(new EItem(itemType.Mouse, "economico", 1.50));
+            add(new EItem(itemType.Mouse, "base", 5.50));
+            add(new EItem(itemType.Mouse, "okay", 10.50));
+            add(new EItem(itemType.Mouse, "buono", 15.50));
+            add(new EItem(itemType.Mouse, "buonetto", 20.50));
+            add(new EItem(itemType.Mouse, "molto buono", 25.50));
+            add(new EItem(itemType.Mouse, "buonissimo", 30.50));
+        }};
+        try{
+            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).checkMoreThanTenMousesDiscount(lista, 111), 110.50, 0.1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test  
+    public void checkMoreThanAThousandSpentDiscountTest(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Mouse, "di diamanti", 300.50));
+            add(new EItem(itemType.Keyboard, "di diamanti", 500.50));
+            add(new EItem(itemType.Keyboard, "di diamanti", 500.50));
+            add(new EItem(itemType.Motherboard, "indistruttibile", 300.00));
+            add(new EItem(itemType.Processor, "alieno", 700.00));
+        }};
+        try{
+            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).checkMoreThanAThousandSpentDiscount(2301.5), 2071.35, 0.1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Test  
+    public void checkIfTotalIsLessThanTenTest(){
+        List<EItem> lista = new ArrayList<EItem>(){{
+            add(new EItem(itemType.Mouse, "conveniente", 3.50));
+            add(new EItem(itemType.Mouse, "conveniente", 3.50));
+        }};
+        try{
+            assertEquals(new EShopBill(lista, new UserImpl(0, "xida",21), new Date()).checkIfTotalIsLessThanTen(7), 9.00, 0.1);
+        }
+        catch(Exception e){
+            e.printStackTrace();
         }
     }
 }
