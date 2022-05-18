@@ -1,8 +1,11 @@
 package it.unipd.mtss;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import it.unipd.mtss.business.App;
 
 /**
  * Unit test for simple App.
@@ -15,6 +18,7 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        App app = new App();
+        assertEquals(3, app.sum(1, 2) );
     }
 }
