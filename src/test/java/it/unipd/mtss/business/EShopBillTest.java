@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////////////
+// XIDA CHEN 1217780
+// DANILO STOJKOVIC 1222399
+////////////////////////////////////////////////////////////////////
 package it.unipd.mtss.business;
 
 import java.util.ArrayList;
@@ -7,7 +11,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import it.unipd.mtss.business.exception.BillException;

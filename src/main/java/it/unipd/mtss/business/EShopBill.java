@@ -79,7 +79,7 @@ public class EShopBill implements Bill{
 
     public static void makeFreeOrder(List<EShopBill> bills) {
 
-        List<EShopBill> validOrders = new LinkedList<>();
+        List<EShopBill> validOrders = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
             for (EShopBill bill: bills) {
                 calendar.setTime(bill.date);
