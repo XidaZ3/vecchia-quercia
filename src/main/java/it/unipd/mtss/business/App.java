@@ -17,7 +17,7 @@ public class App
 {
 
     public interface Bill {
-      double getOrderPrice(List<EItem> itemsOrdered, User user) throws BillException;
+      double getOrderPrice(List<EItem> itemsOrdered, User user);
     }
 
     public static void main( String[] args )
