@@ -6,10 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import it.unipd.mtss.business.App;
-
-/**
- * Unit test for simple App.
- */
+////////////////////////////////////////////////////////////////////
+// XIDA CHEN 1217780
+// DANILO STOJKOVIC 1222399
+////////////////////////////////////////////////////////////////////
 public class AppTest 
 {
     /**
